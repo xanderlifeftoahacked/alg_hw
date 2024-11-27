@@ -1,0 +1,13 @@
+#include <iostream>
+#include <vector>
+
+int main() {
+  size_t n = 0;
+  std::cin >> n;
+
+  std::vector<int> paths(n, 0);
+
+  paths[0] = 1;
+
+  return 0;
+}
