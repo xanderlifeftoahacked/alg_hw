@@ -14,7 +14,8 @@ size_t partition(std::vector<int> &arr, size_t l, size_t r) {
 
   // Второй вариант (без всяких лямбд)
   do {
-    while ((arr[l] < pivot && ++l) || (arr[r] > pivot && --r)) {}
+    while ((arr[l] < pivot && ++l) || (arr[r] > pivot && --r)) {
+    }
   } while (l < r + 1 && (std::swap(arr[r--], arr[l++]), l < r + 1));
 
   return l;
