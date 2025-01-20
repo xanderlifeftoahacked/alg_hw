@@ -1,21 +1,26 @@
 #include <iostream>
 
-template <class T> class Deque {
+template <class T>
+class Deque {
   struct Node {
     T value;
     Node *next;
     Node *prev;
-    Node(T val) : value{val}, next{nullptr}, prev{nullptr} {}
+    Node(T val) : value{val}, next{nullptr}, prev{nullptr} {
+    }
   };
 
   Node *head;
   Node *tail;
   size_t sz;
 
-public:
-  Deque() : head{nullptr}, tail{nullptr}, sz{0} {}
+ public:
+  Deque() : head{nullptr}, tail{nullptr}, sz{0} {
+  }
 
-  ~Deque() { clear(); }
+  ~Deque() {
+    clear();
+  }
 
   void clear() {
     while (head) {
@@ -102,7 +107,9 @@ public:
       throw std::runtime_error("Deque is empty");
     }
   }
-  size_t size() { return sz; }
+  size_t size() {
+    return sz;
+  }
 };
 
 int main() {
