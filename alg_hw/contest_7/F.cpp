@@ -1,4 +1,3 @@
-
 #include <algorithm>
 #include <functional>
 #include <iostream>
@@ -6,7 +5,7 @@
 #include <vector>
 
 std::vector<int> dodfs(const std::map<int, std::vector<int>> &graph, size_t m) {
-  std::vector<bool> visited(m, false);
+  std::vector<bool>visited(m, false);
   std::vector<int> answer;
 
   std::function<void(int)> dfs = [&](int u) {
