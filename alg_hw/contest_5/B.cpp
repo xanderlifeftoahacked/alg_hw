@@ -1,7 +1,7 @@
-#include <iostream>
 #include <algorithm>
-#include <vector>
 #include <cstdint>
+#include <iostream>
+#include <vector>
 
 const int64_t p1 = 7;
 const int64_t mod1 = 1e9 + 7;
@@ -14,7 +14,7 @@ struct StringHash {
   int64_t size;
   int64_t left;
 
-  friend bool operator<(const StringHash& left, const StringHash& right) {
+  friend bool operator<(const StringHash &left, const StringHash &right) {
     if (left.hashes < right.hashes) {
       return true;
     }
@@ -30,8 +30,7 @@ struct StringHash {
   }
 };
 
-template <typename T>
-T modpow(T base, T exp, T modulus) {
+template <typename T> T modpow(T base, T exp, T modulus) {
   base %= modulus;
   T result = 1;
   while (exp > 0) {
@@ -43,11 +42,14 @@ T modpow(T base, T exp, T modulus) {
   return result % modulus;
 }
 
-int64_t get_hash(const std::vector<int64_t>& prefix_hash, int64_t l, int64_t r, int64_t pp, int64_t mmod) {
+int64_t get_hash(const std::vector<int64_t> &prefix_hash, int64_t l, int64_t r,
+                 int64_t pp, int64_t mmod) {
   if (l == 0) {
     return prefix_hash[r];
   }
-  return (prefix_hash[r] - (prefix_hash[l - 1] * modpow(pp, r - l + 1, mmod) % mmod) + mmod) % mmod;
+  return (prefix_hash[r] -
+          (prefix_hash[l - 1] * modpow(pp, r - l + 1, mmod) % mmod) + mmod) %
+         mmod;
 }
 
 int main() {
@@ -68,8 +70,6 @@ int main() {
     prefix_hashes2[i] = (((prefix_hashes2[i - 1] * p2) % mod2) + str[i]) % mod2;
   }
 
-  auto comp = [](StringHash l, StringHash r) { return l < r; };
-
   std::vector<StringHash> hashes_vec;
   for (int64_t l = 0; l < s.size(); ++l) {
     for (int64_t r = l; r < s.size(); ++r) {
@@ -81,7 +81,7 @@ int main() {
     }
   }
 
-  std::sort(hashes_vec.begin(), hashes_vec.end(), comp);
+  std::sort(hashes_vec.begin(), hashes_vec.end());
   size_t ans = 0;
   for (size_t i = 0; i < hashes_vec.size(); ++i) {
     size_t r = i;
@@ -93,7 +93,8 @@ int main() {
       ++r;
     }
 
-    if (hashes_vec[i].hashes == hashes_vec[r].hashes && hashes_vec[i].left + hashes_vec[i].size <= hashes_vec[r].left) {
+    if (hashes_vec[i].hashes == hashes_vec[r].hashes &&
+        hashes_vec[i].left + hashes_vec[i].size <= hashes_vec[r].left) {
       ++ans;
     }
 

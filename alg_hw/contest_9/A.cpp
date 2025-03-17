@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+map<pair<int, int>, long long> streets;
+map<pair<int, int>, int> egde_cnt;
 vector<pair<int, int>> find_bridges(vector<vector<int>> &graph) {
   vector<bool> visited(graph.size(), false);
   vector<int> up(graph.size(), 1e9);
@@ -23,8 +25,7 @@ vector<pair<int, int>> find_bridges(vector<vector<int>> &graph) {
         up[v] = min(tin[u], up[v]);
       }
     }
-
-    if (tin[v] == up[v] && p != -1) {
+    if (tin[v] == up[v] && p != -1 && egde_cnt[{max(v, p), min(v, p)}] == 1) {
       ans.push_back({max(v, p), min(v, p)});
     }
   };
@@ -38,28 +39,35 @@ vector<pair<int, int>> find_bridges(vector<vector<int>> &graph) {
 }
 
 int main() {
+  cin.tie(0);
+  cout.tie(0);
+  ios_base::sync_with_stdio(0);
+
   int n, m;
 
   cin >> n >> m;
   vector<vector<int>> graph(n, vector<int>());
 
-  map<pair<int, int>, int> streets;
-
-  int a, b;
+  long long a, b, id;
   for (size_t i = 1; i <= m; ++i) {
-    cin >> a >> b;
+    cin >> id >> a >> b;
 
-    graph[a - 1].push_back(b - 1);
-    graph[b - 1].push_back(a - 1);
-    streets[{max(a - 1, b - 1), min(a - 1, b - 1)}] = i;
+    graph[a].push_back(b);
+    graph[b].push_back(a);
+    streets[{max(a, b), min(a, b)}] = id;
+    ++egde_cnt[{max(a, b), min(a, b)}];
   }
 
   auto ans = find_bridges(graph);
-  cout << ans.size() << '\n';
 
   set<int> ans_new;
   for (auto [a, b] : ans) {
     ans_new.insert(streets[{a, b}]);
+  }
+
+  if (ans_new.size() == 0) {
+    cout << "-1\n";
+    return 0;
   }
 
   for (auto elem : ans_new) {
