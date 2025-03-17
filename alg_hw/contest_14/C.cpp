@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-#include <cstdlib>
-#include <ctime>
 using namespace std;
 #define ll long long
 #define MOD 1000000001
@@ -9,27 +7,24 @@ struct Node {
   ll x;
   ll sum;
   ll y;
-  Node* left;
-  Node* right;
+  Node *left;
+  Node *right;
 
-  Node(ll _x) : x{_x}, sum{_x}, y{rand()}, left{nullptr}, right{nullptr} {
-  }
+  Node(ll _x) : x{_x}, sum{_x}, y{rand()}, left{nullptr}, right{nullptr} {}
 };
 
 struct Pivo {
-  Node* root = nullptr;
+  Node *root = nullptr;
 
-  ll sum(Node* v) {
-    return (v ? v->sum : 0LL);
-  }
+  ll sum(Node *v) { return (v ? v->sum : 0LL); }
 
-  void upd(Node* v) {
+  void upd(Node *v) {
     if (!v)
       return;
     v->sum = sum(v->left) + sum(v->right) + v->x;
   }
 
-  Node* merge(Node* a, Node* b) {
+  Node *merge(Node *a, Node *b) {
     if (a == nullptr)
       return b;
     if (b == nullptr)
@@ -45,7 +40,7 @@ struct Pivo {
     return b;
   }
 
-  pair<Node*, Node*> split(Node* a, ll k) {
+  pair<Node *, Node *> split(Node *a, ll k) {
     if (!a) {
       return {nullptr, nullptr};
     }
@@ -62,11 +57,11 @@ struct Pivo {
     return {l, a};
   }
 
-  Node* remove(Node* a, ll x) {
+  Node *remove(Node *a, ll x) {
     if (a == nullptr)
       return nullptr;
     if (a->x == x) {
-      Node* res = merge(a->left, a->right);
+      Node *res = merge(a->left, a->right);
       delete a;
       return res;
     } else if (x < a->x) {
@@ -78,7 +73,7 @@ struct Pivo {
     return a;
   }
 
-  bool find(Node* root, ll x) {
+  bool find(Node *root, ll x) {
     if (!root)
       return false;
     if (root->x == x)
@@ -96,7 +91,7 @@ struct Pivo {
     }
 
     auto [l, r] = split(root, x);
-    Node* t = new Node(x);
+    Node *t = new Node(x);
     root = merge(l, merge(t, r));
   }
 
@@ -110,9 +105,7 @@ struct Pivo {
 };
 
 ll last_s = 0;
-ll f(ll x) {
-  return (x + last_s) % MOD;
-}
+ll f(ll x) { return (x + last_s) % MOD; }
 
 void solve() {
   size_t n;
